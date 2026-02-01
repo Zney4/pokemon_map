@@ -32,6 +32,10 @@ pip install -r requirements.txt
 ```sh
 python3 manage.py runserver
 ```
+Создание супер пользователя
+```
+python manage.py createsuperuser
+```
 
 ### Переменные окружения
 
