@@ -14,6 +14,9 @@
 
 ![bulba evolution](https://dvmn.org/filer/canonical/1562265973/167/)
 
+## Требования к окружению
+Python
+
 ### Как запустить
 
 Для запуска сайта вам понадобится Python третьей версии.
@@ -28,6 +31,10 @@ pip install -r requirements.txt
 
 ```sh
 python3 manage.py runserver
+```
+Создание супер пользователя
+```
+python manage.py createsuperuser
 ```
 
 ### Переменные окружения
