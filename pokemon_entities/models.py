@@ -26,11 +26,11 @@ class PokemonEntity(models.Model):
     disappeared_at = models.DateTimeField('Исчезнит')
 
 
-    level = models.FloatField(default=0)
-    health = models.FloatField(default=0)
-    strength = models.FloatField(default=0)
-    defence = models.FloatField(default=0)
-    stamina = models.FloatField(default=0)
+    level = models.FloatField(null=True, blank=True)
+    health = models.FloatField(null=True, blank=True)
+    strength = models.FloatField(null=True, blank=True)
+    defence = models.FloatField(null=True, blank=True)
+    stamina = models.FloatField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.pokemon}: {self.latitude}, {self.longitude}, {self.appeared_at}, {self.disappeared_at}"
