@@ -9,10 +9,13 @@ class PokemonEntityInline(admin.TabularInline):
     model = PokemonEntity
 
 
-admin.site.register(Pokemon)
+
 class PokemonAdmin(admin.ModelAdmin):
     inlines = [PokemonEntityInline]
-    list_display = ['title', 'image']
+    list_display = ['title', 'image', 'name_en', 'name_ja']
+
+
+admin.site.register(Pokemon, PokemonAdmin)
 
 
 
