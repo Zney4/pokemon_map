@@ -63,6 +63,9 @@ def show_all_pokemons(request):
             'pokemon_id': pokemon.id,
             'img_url': image_url,
             'title_ru': pokemon.title,
+            'title_en': pokemon.name_en,
+            'title_ja': pokemon.name_ja
+            ,
         })
 
     return render(request, 'mainpage.html', context={
