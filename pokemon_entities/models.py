@@ -2,15 +2,24 @@ from django.db import models  # noqa F401
 
 
 class Pokemon(models.Model):
-    title = models.CharField(max_length=200)
+    title_ru = models.CharField(max_length=200)
     image = models.ImageField(upload_to='pokemon_entities/',
                                       blank=True,
                                       null=True)
-    name_en = models.CharField(blank=True, max_length=200)
-    name_ja = models.CharField(blank=True, max_length=200)
+    title_en = models.CharField(blank=True, max_length=200)
+    title_jp = models.CharField(blank=True, max_length=200)
+    description = models.TextField(blank=True)
+
+    previous_evolution = models.ForeignKey('self', null=True, blank=True,
+                                           on_delete=models.SET_NULL,
+                                           related_name='next_evolutions'
+                                           )
 
     def __str__(self):
-        return self.title
+        return self.title_ru
+
+    def get_next_evolutions(self):
+        return self.next_evolutions.all()
 
 
 class PokemonEntity(models.Model):

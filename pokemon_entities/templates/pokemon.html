@@ -18,44 +18,59 @@
     </ul>
     <div class="d-flex mt-5 row">
       <div class="pull-left mr-2 float-left ml-4">
-        <img src="{{pokemon.img_url}}" style="height:200px; width:200px">
+        <img src="{{pokemon.image.url}}" style="height:200px; width:200px">
       </div>
       <div class="m-2 ml-4 col-11 col-sm-8 col-lg-8 col-xl-8">
         <h1>{{pokemon.title_ru}}</h1>
         <p><b>{{pokemon.title_ru}}</b> (анг. {{pokemon.title_en}}, яп. {{pokemon.title_jp}}) — {{pokemon.description}}</p>
         <hr>
         <div class="mt-4">
-          {% if pokemon.next_evolution or pokemon.previous_evolution %}
+          {% if pokemon.previous_evolution or pokemon.next_evolutions.all %}
             <h4 class="mb-0">Эволюции покемона</h4>
             <div class="row">
-              {% if pokemon.previous_evolution %}
-                <div class="col-5 clearfix p-2 m-2">
-                  <div class="img-thumbnail">
-                    <a href="{% url 'pokemon' pokemon.previous_evolution.pokemon_id %}">
-                      <div class="d-flex justify-content-center">
-                        <img class="pull-left mr-2 float-left" src="{{pokemon.previous_evolution.img_url}}" style="height:50px; width:50px">
-                        <p class="align-middle m-0" style="line-height:50px; font-size: 20px;">{{pokemon.previous_evolution.title_ru}}</p>
-                      </div>
-                    </a>
-                  </div>
-                  <h6 class="d-flex justify-content-center m-2">Из кого эволюционировал</h6>
+            {% if pokemon.previous_evolution %}
+              <div class="col-5 clearfix p-2 m-2">
+                <div class="img-thumbnail">
+                  <a href="{% url 'pokemon' pokemon.previous_evolution.id %}">
+                    <div class="d-flex justify-content-center align-items-center">
+                      {% if pokemon.previous_evolution.image %}
+                        <img src="{{ pokemon.previous_evolution.image.url }}" style="height:50px; width:50px">
+                      {% else %}
+                        <img src="{{ DEFAULT_IMAGE_URL }}" style="height:50px; width:50px">
+                      {% endif %}
+                      <p class="m-0 ml-2" style="line-height:50px; font-size: 20px;">
+                        {{ pokemon.previous_evolution.title_ru }}
+                      </p>
+                    </div>
+                  </a>
                 </div>
-              {% endif %}
-              {% if pokemon.next_evolution %}
-                <div class="col-5 clearfix p-2 m-2">
-                  <div class="img-thumbnail">
-                    <a href="{% url 'pokemon' pokemon.next_evolution.pokemon_id %}">
-                      <div class="d-flex justify-content-center">
-                        <img class="pull-left mr-2 float-left" src="{{pokemon.next_evolution.img_url}}" style="height:50px; width:50px">
-                        <p class="align-middle m-0" style="line-height:50px; font-size: 20px;">{{pokemon.next_evolution.title_ru}}</p>
-                      </div>
-                    </a>
-                  </div>
-                  <h6 class="d-flex justify-content-center m-2">В кого эволюционирует</h6>
+                <h6 class="d-flex justify-content-center m-2">Из кого эволюционировал</h6>
+              </div>
+            {% endif %}
+
+            {% for next in pokemon.next_evolutions.all %}
+              <div class="col-5 clearfix p-2 m-2">
+                <div class="img-thumbnail">
+                  <a href="{% url 'pokemon' next.id %}">
+                    <div class="d-flex justify-content-center align-items-center">
+                      {% if next.image %}
+                        <img src="{{ next.image.url }}" style="height:50px; width:50px">
+                      {% else %}
+                        <img src="{{ DEFAULT_IMAGE_URL }}" style="height:50px; width:50px">
+                      {% endif %}
+                      <p class="m-0 ml-2" style="line-height:50px; font-size: 20px;">
+                        {{ next.title_ru }}
+                      </p>
+                    </div>
+                  </a>
                 </div>
-              {% endif %}
-            </div>
+                <h6 class="d-flex justify-content-center m-2">В кого эволюционирует</h6>
+              </div>
+            {% endfor %}
+
+           </div>
           {% endif %}
+
         </div>
         {% if pokemon.element_type %}
           <hr>
@@ -75,9 +90,9 @@
 
     <h1 class="mt-5 mb-2">Карта {{pokemon.title}} в Москве</h1>
     <div class="mb-5">
-      {{map|safe}}  
+      {{map|safe}}
     </div>
   </div>
-  
+
 </body>
 </html>
